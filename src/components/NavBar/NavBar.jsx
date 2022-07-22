@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7, ViewSidebar } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
+
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 import { setUser, userSelector } from '../../features/auth';
 import { Sidebar, Search } from '..';
@@ -20,8 +22,9 @@ const NavBar = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
   const dispatch = useDispatch();
+  const colorMode = useContext(ColorModeContext);
 
-  console.log(user);
+  // console.log(user);
 
   const token = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
@@ -61,7 +64,7 @@ const NavBar = () => {
             <Menu />
           </IconButton>
         )}
-        <IconButton color="inherit" sx={{ ml:1}} onClick={() => {}}>
+        <IconButton color="inherit" sx={{ ml:1}} onClick={colorMode.toggleColorMode}>
         {theme.palette.mode ==='dark' ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
         {!isMobile && <Search />}
@@ -82,7 +85,7 @@ const NavBar = () => {
                 <Avatar
                   style={{width: 30, height: 30}}
                   alt="Profile"
-                  src="https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w"
+                  src={`https://www.themoviedb.org/t/p/w64_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
                  />
             </Button>
           )}

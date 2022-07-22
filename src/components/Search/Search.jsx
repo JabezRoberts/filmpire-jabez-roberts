@@ -11,6 +11,7 @@ const Search = () => {
     const classes = useStyles();
     const [query, setQuery] = useState('');
     const dispatch = useDispatch();
+    const location = useLocation();
 
     console.log('Search');
 
@@ -19,8 +20,9 @@ const Search = () => {
         if(event.key === 'Enter') {
             dispatch(searchMovie(query));
         }
-    }
+    };
 
+    if(location.pathname !== '/') return null;
 
   return (
     <div className={classes.searchContainer}>
